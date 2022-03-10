@@ -1,0 +1,28 @@
+<section>
+  <button type="button" mat-stroked-button (click)="mintToken()">create tokens</button>
+</section>
+
+<section>
+  <button type="button" mat-stroked-button (click)="getOwner()">contract owner</button>
+  <h4>The current contract owner is : {{owner}}</h4>
+  <button type="button" mat-stroked-button (click)="getBalance()">Nb tokens</button>
+  <h4>You currently have {{tokens}} tokens</h4>
+</section>
+
+<form [formGroup]="sendForm">
+  <h3>Send token</h3>
+  <mat-form-field>
+     <mat-label>Send form : </mat-label>
+     <input matInput type="text" id="sender" required formControlName="sender">
+  </mat-form-field>
+  <mat-form-field>
+     <mat-label>Send to : </mat-label>
+     <input matInput type="text" id="recipient" required formControlName="recipient">
+  </mat-form-field>
+   <mat-form-field>
+     <mat-label>Token id: </mat-label>
+     <input matInput type="number" id="nbToken" required formControlName="tokenId">
+   </mat-form-field>
+   <button mat-stroked-button type="submit" [disabled]="!sendForm.valid" (click)="sendToken()">send token</button>
+</form>
+
