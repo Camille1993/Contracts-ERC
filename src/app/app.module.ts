@@ -15,13 +15,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { ContractErc1155Component } from './contract-erc1155/contract-erc1155.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ContractErc20Component,
-    ContractErc721Component    
+    ContractErc721Component,
+    ContractErc1155Component    
   ],
   imports: [
     BrowserModule,
@@ -32,7 +34,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       { path: 'contract/ERC20', component: ContractErc20Component },
-      { path: 'contract/ERC721', component: ContractErc721Component }
+      { path: 'contract/ERC721', component: ContractErc721Component },
+      { path: 'contract/ERC1155', component: ContractErc1155Component }
     ]),
     MatButtonModule,
     MatInputModule,

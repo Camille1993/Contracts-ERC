@@ -37,32 +37,31 @@ export class Erc721 extends Contract {
   }
 
   // write function
-  approve(address: string, tokenId: BigNumberish, overrides?: Overrides): Promise<ContractTransaction> {
-    return this.functions['approve'](address, tokenId, overrides)
+  approve(address: string, tokenId: BigNumberish): Promise<ContractTransaction> {    
+    return this.functions['approve'](address, tokenId)
   }
-  async frontMint(address: string, overrides?: Overrides): Promise<ContractTransaction> {
-    const txMint = await super['frontMint'](address, overrides);
-    return await txMint.wait();
+  frontMint(address: string, overrides?: Overrides): Promise<ContractTransaction> {
+    return this.functions['frontMint'](address, {overrides});
   }
   renounceOwnerShip(): Promise<ContractTransaction> {
     return this.functions['renounceOwnerShip']();
   }
-  safeMint(address: string, overrides?: Overrides): Promise<ContractTransaction> {
-    return this.functions['safeMint'](address, overrides);
+  safeMint(address: string): Promise<ContractTransaction> {
+    return this.functions['safeMint'](address);
   }
-  safeTransferFrom(sender: string, recipient: string, tokenId: BigNumberish, overrides?: Overrides): Promise<ContractTransaction> {
-    return this.functions['safeTransferFrom'](sender, recipient, tokenId, overrides)
+  safeTransferFrom(sender: string, recipient: string, tokenId: BigNumberish): Promise<ContractTransaction> {
+    return this.functions['safeTransferFrom'](sender, recipient, tokenId)
   }
-  safeDataTransferFrom(sender: string, recipient: string, tokenId: BigNumberish, _data:string, overrides?: Overrides): Promise<ContractTransaction> {
-    return this.functions['safeTransferFrom'](sender, recipient, tokenId, _data, overrides)
+  safeDataTransferFrom(sender: string, recipient: string, tokenId: BigNumberish, _data:string): Promise<ContractTransaction> {
+    return this.functions['safeTransferFrom'](sender, recipient, tokenId, _data)
   }
-  setApprovallForAll(operator: string, approved: boolean, overrides?: Overrides): Promise<ContractTransaction> {
-    return this.functions['setApprovalForAll'](operator, approved, overrides);
+  setApprovallForAll(operator: string, approved: boolean): Promise<ContractTransaction> {
+    return this.functions['setApprovalForAll'](operator, approved);
   }
   transfer(senderAddress: string, recipientAddress: string, tokenId: number): Promise<ContractTransaction> {
     return this.functions['transferFrom'](senderAddress, recipientAddress, tokenId);
   }
-  transferOwnership(newOwner: string, overrides: Overrides): Promise<ContractTransaction> {
-    return this.functions['transferOwnership'](newOwner, overrides);
+  transferOwnership(newOwner: string): Promise<ContractTransaction> {
+    return this.functions['transferOwnership'](newOwner);
   }
 }
