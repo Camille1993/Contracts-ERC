@@ -7,4 +7,9 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: rgb(36, 35, 35);
+  color: invert($color: rgb(36, 35, 35));
+}
+mat-label {
+  color: invert($color: rgb(36, 35, 35));
 }

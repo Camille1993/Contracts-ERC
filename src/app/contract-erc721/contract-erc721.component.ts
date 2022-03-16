@@ -11,6 +11,7 @@ import { Erc721 } from './erc721';
 export class ContractErc721Component {
   owner?: string;
   tokens?: BigNumberish;
+  tokensId?: BigNumberish[];
   sendForm = new FormGroup({
     sender: new FormControl(''),
     recipient: new FormControl(''),
@@ -34,6 +35,28 @@ export class ContractErc721Component {
     const values = this.sendForm.value;
     const sendToken = await this.ERC721.transfer(values.sender, values.recipient, values.tokenId);
     console.log(sendToken);
+  }
+
+  async getAllBalance() {
+    const address = '0x228CD317eDD31b7417Ed3DC1334f43b35199Be4e';
+    //query tokens mint
+    const eventFilterTo = this.ERC721.filters['Transfer'](null, address);
+    const queryFilterTo = await this.ERC721.queryFilter(eventFilterTo);
+    const tokensTo = queryFilterTo.map((token) => {
+      const tokenId = Object.values(token.args!);
+      return tokenId[5].toString()    
+    });
+
+    //query tokens send
+    const eventFilterFrom = this.ERC721.filters['Transfer'](address);
+    const queryFilterFrom = await this.ERC721.queryFilter(eventFilterFrom);
+     const tokensFrom = queryFilterFrom.map((token) => {
+      const tokenId = Object.values(token.args!);
+      return tokenId[5].toString()    
+    });
+
+    // remove send tokens to total of possessed tokens
+    this.tokensId = tokensTo.filter((token) => token != tokensFrom);
   }
 
 }

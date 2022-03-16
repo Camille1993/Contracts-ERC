@@ -14,8 +14,9 @@ export class Erc1155 extends Contract {
   balanceOf(account: string, tokenId: BigNumberish): Promise<BigNumber> {
     return this.functions['balanceOf'](account, tokenId);
   }
-  //todo balanceOfBatch
-  
+  balanceOfBatch(accounts: string[], tokenId: BigNumberish[]): Promise<BigNumber[]> {
+    return this.functions['balanceOfBatch'](accounts, tokenId);
+  }
   isApprovedForAll(account: string, operator: string): Promise<boolean> {
     return this.functions['isApprovedForAll'](account, operator);
   }
@@ -28,5 +29,56 @@ export class Erc1155 extends Contract {
   uri(input: BigNumberish): Promise<string> {
     return this.functions['uri'](input);
   }
+
   //write functions (transactions)
+  mint(
+    account: string, 
+    id: BigNumberish, 
+    amount: BigNumberish, 
+    data: string, 
+    overrides: Overrides = {}
+    ): Promise<ContractTransaction> {
+    return this.functions['mint'](account, id, amount, data, overrides);
+  }
+  mintBatch(
+    recipient: string,
+    ids: BigNumberish[],
+    amounts: BigNumberish[],
+    data: string,
+    overrides: Overrides = {},
+  ): Promise<ContractTransaction> {
+    return this.functions['mintBatch'](recipient, ids, amounts, data, overrides);
+  }
+  renonceOwnership(overrides: Overrides = {}): Promise<ContractTransaction> {
+    return this.functions['renonceOwnership'](overrides);
+  }
+  safeBatchTransferFrom(
+    sender: string,
+    recipient: string,
+    ids: BigNumberish[],
+    amounts: BigNumberish[],
+    data: string,
+    overrides: Overrides = {}
+  ): Promise<ContractTransaction> {
+    return this.functions['safeBatchTransferFrom'](sender, recipient, ids, amounts, data, overrides);
+  }
+  safeTransferFrom(
+    sender: string,
+    recipient: string,
+    tokenId: BigNumberish,
+    amount: BigNumberish,
+    data: string,
+    overrides: Overrides = {}
+    ): Promise<ContractTransaction> {
+    return this.functions['safeTransferFrom'](sender, recipient, tokenId, amount, data, overrides);
+  }
+  setApprovalForAll(operator: string, approved: boolean, overrides: Overrides = {}): Promise<ContractTransaction> {
+    return this.functions['setApprovalForAll'](operator, approved, overrides);
+  }
+  setURI(newUri: string, overrides: Overrides = {}): Promise<ContractTransaction> {
+    return this.functions['setURI'](newUri, overrides);
+  }
+  transferOwnership(newOwner: string, overrides: Overrides = {}): Promise<ContractTransaction> {
+    return this.functions['transferOwnership'](newOwner, overrides);
+  }
 }

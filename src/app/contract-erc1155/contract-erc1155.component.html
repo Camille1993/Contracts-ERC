@@ -1,1 +1,145 @@
-<p>contract-erc1155 works!</p>
+<section>
+  <div>
+    <h3>Contract Owner</h3>
+    <button type="button" mat-stroked-button (click)="getOwner()">contract owner</button>
+    <h4>The current contract owner is :</h4>
+    <h4>{{owner}}</h4>
+  </div>
+
+  <form [formGroup]="balanceOfForm">
+    <h3>Balance of</h3>
+    <mat-form-field>
+      <mat-label>token Id</mat-label>
+      <input matInput type="number" formControlName="tokenId">
+    </mat-form-field>
+    <button type="submit" mat-stroked-button [disabled]="!balanceOfForm.valid" (click)="getBalance()">Nb tokens</button>
+  </form>  
+  <h4>You currently have {{tokens}} tokens for token {{id}}</h4>
+</section>
+
+<section>
+  <button type="button" mat-stroked-button (click)="getTokensIds()">get all your tokens Id</button>
+</section>
+
+<section class="mint">  
+  <form [formGroup]="mintForm">
+    <h3>mint Token</h3>
+    <mat-form-field>
+      <mat-label>token id</mat-label>
+      <input matInput type="number" formControlName="tokenId">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>token amount to mint</mat-label>
+      <input matInput type="number" formControlName="nbToken">
+    </mat-form-field>
+    <button type="submit" mat-stroked-button [disabled]="!mintForm.valid"(click)="mintToken()">create tokens</button>
+  </form>
+
+  <hr>
+
+  <form [formGroup]="mintBatchForm" (ngSubmit)="mintBatchToken()">
+    <h3>or a batch of tokens</h3>
+    <div class="mintBatchForm">
+    <ng-container>
+      <div class="allIds">
+        <ng-container>
+          <ng-container *ngFor="let idForm of tokenIds.controls; let i = index">
+            <div class="tokenIds" [formGroup]="$any(idForm)">
+              <mat-icon class="delete" (click)="removeMintToken(i)">delete</mat-icon>  
+              <mat-form-field class="tokenId">
+                <mat-label>Token id</mat-label>
+                <input matInput formControlName="idToken" type="number">
+              </mat-form-field>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+      <div class="allAmounts">
+        <ng-container>
+          <ng-container *ngFor="let amountForm of amountTokens.controls, let i = index">
+            <div class="amountToken" [formGroup]="$any(amountForm)">
+              <mat-form-field>
+                <mat-label>Nb token</mat-label>
+                <input matInput formControlName="amountToken" type="number">
+              </mat-form-field>
+            </div>      
+          </ng-container>
+        </ng-container>
+      </div>
+    </ng-container>
+  </div>
+    <button mat-stroked-button type="button" (click)="addMintToken()">Add token</button>
+    <button mat-stroked-button type="submit" [disabled]="!mintBatchForm.valid || mintBatchForm.pristine">Mint All</button>
+  </form>
+</section>
+
+
+<section class="send">
+  <form [formGroup]="sendForm">
+    <h3>Send token</h3>
+    <mat-form-field>
+       <mat-label>Send form : </mat-label>
+       <input matInput type="text" id="sender" formControlName="sender">
+    </mat-form-field>
+    <mat-form-field>
+       <mat-label>Send to : </mat-label>
+       <input matInput type="text" id="recipient" formControlName="recipient">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Token id: </mat-label>
+      <input matInput type="number" id="nbToken" formControlName="tokenId">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Token Amount</mat-label>
+      <input matInput type="number" id="amount" formControlName="amount">
+    </mat-form-field>
+    <button mat-stroked-button type="submit" [disabled]="!sendForm.valid" (click)="sendToken()">send token</button>
+  </form>
+
+  <hr>
+
+  <form [formGroup]="sendBatchForm">
+    <h3>or a batch of tokens</h3>
+    <mat-form-field>
+       <mat-label>Send form : </mat-label>
+       <input matInput type="text" id="sender" formControlName="sender">
+    </mat-form-field>
+    <mat-form-field>
+       <mat-label>Send to : </mat-label>
+       <input matInput type="text" id="recipient" formControlName="recipient">
+    </mat-form-field>
+    <div class="sendBatchForm">
+      <ng-container>
+        <div class="allIds">
+          <ng-container>
+            <ng-container *ngFor="let idSendForm of tokenIdsToSend.controls; let i = index">
+              <div class="tokenIds" [formGroup]="$any(idSendForm)">
+                <mat-icon class="delete" (click)="removeTokenToSend(i)">delete</mat-icon>  
+                <mat-form-field class="tokenId">
+                  <mat-label>Token id</mat-label>
+                  <input matInput formControlName="idTokenToSend" type="number">
+                </mat-form-field>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+        <div class="allAmounts">
+          <ng-container>
+            <ng-container *ngFor="let amountSendForm of tokenAmountToSend.controls; let i = index">
+              <div class="tokenIds" [formGroup]="$any(amountSendForm)">  
+                <mat-form-field class="tokenId">
+                  <mat-label>Token amount</mat-label>
+                  <input matInput formControlName="amountToSend" type="number">
+                </mat-form-field>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </ng-container>
+    </div>
+    <button mat-stroked-button type="button" (click)="addTokensToSend()">Add token</button>
+    <button mat-stroked-button type="submit" [disabled]="!sendBatchForm.valid || sendBatchForm.pristine" (click)="sendToken()">send token</button>
+  </form>
+
+</section>
+

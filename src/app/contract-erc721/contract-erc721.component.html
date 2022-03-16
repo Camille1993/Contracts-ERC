@@ -1,12 +1,23 @@
 <section>
-  <button type="button" mat-stroked-button (click)="mintToken()">create tokens</button>
+  <button type="button" mat-stroked-button (click)="getOwner()">contract owner</button>
+  <h4>The current contract owner is : {{owner}}</h4>
+  <button type="button" mat-stroked-button (click)="getBalance()">tokens amount</button>
+  <h4>You currently have {{tokens}} tokens</h4>
+</section>
+<section>
+  <button type="button" mat-stroked-button (click)="getAllBalance()">get your tokens Id</button>
+  <table>
+    <tbody>
+        <tr *ngFor="let token of tokensId">
+            <td>token id :</td>
+            <td>{{token}}</td>
+        </tr>
+    </tbody>
+</table>
 </section>
 
 <section>
-  <button type="button" mat-stroked-button (click)="getOwner()">contract owner</button>
-  <h4>The current contract owner is : {{owner}}</h4>
-  <button type="button" mat-stroked-button (click)="getBalance()">Nb tokens</button>
-  <h4>You currently have {{tokens}} tokens</h4>
+  <button type="button" mat-stroked-button (click)="mintToken()">create tokens</button>
 </section>
 
 <form [formGroup]="sendForm">

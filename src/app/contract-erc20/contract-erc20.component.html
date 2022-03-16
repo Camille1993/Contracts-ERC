@@ -1,12 +1,12 @@
 <section>
-  <button type="button" mat-stroked-button (click)="mintTokens()">create tokens</button>
-</section>
-
-<section>
   <button type="button" mat-stroked-button (click)="getOwner()">contract owner</button>
   <h4>The current contract owner is : {{owner}}</h4>
   <button type="button" mat-stroked-button (click)="getBalance()">Nb tokens</button>
   <h4>You currently have {{tokens}} tokens</h4>
+</section>
+
+<section>
+  <button type="button" mat-stroked-button (click)="mintTokens()">create tokens</button>
 </section>
 
 <form [formGroup]="sendForm">

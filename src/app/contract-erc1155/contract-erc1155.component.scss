@@ -1,0 +1,57 @@
+:host {
+  display: block;
+  padding: 16px;
+}
+h3 {
+  font-weight: 500;
+  font-size: 20px;
+  color: #673ab7;
+}
+section,
+form {
+  margin-bottom: 16px;
+}
+.mat-form-field {
+  display: flex;
+  margin-bottom: 16px;
+}
+.mintBatchForm,
+.sendBatchForm {
+  display: flex;
+  flex-direction: row;
+}
+.tokenId {
+  padding-left: 32px;
+}
+.tokenIds {
+  display: flex;
+  align-items: center;
+}
+.allIds,
+.allAmounts {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+}
+.amountToken {
+  padding-left: 24px;
+}
+button {
+  margin-right: 16px;
+  margin-bottom: 6px;
+}
+.send,
+.mint {
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.mint form,
+.send form {
+  width: 50%;
+}
+hr {
+  margin-right: 16px;
+}
