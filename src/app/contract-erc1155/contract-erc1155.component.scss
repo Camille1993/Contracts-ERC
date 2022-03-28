@@ -55,3 +55,18 @@ button {
 hr {
   margin-right: 16px;
 }
+table,
+th,
+td {
+  font-size: 16px;
+  margin-left: 25%;
+  height: 28px;
+  width: 45%;
+  text-align: center;
+  border: 1px solid;
+  margin-bottom: 32px;
+}
+thead {
+  color: #673ab7;
+  font-weight: 500;
+}

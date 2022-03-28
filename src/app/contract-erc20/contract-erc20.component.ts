@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Erc20 } from './erc20';
+import { Erc20 } from '../services/erc20';
 
 @Component({
   selector: 'app-contract-erc20',
@@ -9,12 +9,11 @@ import { Erc20 } from './erc20';
 })
 export class ContractErc20Component {
   owner?: string;
-  tokens?: number;
+  tokens?: string;
   sendForm = new FormGroup({
     recipient: new FormControl(''),
     nbTokens: new FormControl(''),
   });
-
 
   constructor(private ERC20: Erc20) { }
 
@@ -23,12 +22,12 @@ export class ContractErc20Component {
   }
 
   async getBalance() {
-    const balanceOf = await this.ERC20.balanceOf('0x228CD317eDD31b7417Ed3DC1334f43b35199Be4e');
+    const balanceOf = await this.ERC20.balanceOf('0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266');
     this.tokens = balanceOf.toString();
   }
 
   async mintTokens() {
-    const mintTokens = await this.ERC20.mint('0x228CD317eDD31b7417Ed3DC1334f43b35199Be4e', 15);
+    const mintTokens = await this.ERC20.mint('0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266', 1500);
     console.log(mintTokens);    
   }
   async sendTokens() {

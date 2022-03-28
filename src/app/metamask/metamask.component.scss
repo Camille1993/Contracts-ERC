@@ -1,0 +1,30 @@
+.metamask {
+  display: flex;
+  justify-content: center;
+  .profil {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 200px;
+    eth-jazzicon {
+      width: 50px;
+      height: 50px;
+    }
+    .infoProfil {
+      display: flex;
+      flex-direction: column;
+      justify-content: end;
+      h4 {
+        font-weight: 400;
+        font-size: 16px;
+        letter-spacing: 1.5px;
+        margin-bottom: -10px;
+      }
+      h5 {
+        font-size: 11px;
+        color: turquoise;
+        letter-spacing: 1.5px;
+      }
+    }
+  }
+}

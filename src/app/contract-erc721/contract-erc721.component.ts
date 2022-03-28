@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { BigNumberish } from 'ethers';
-import { Erc721 } from './erc721';
+import { BigNumber, BigNumberish } from 'ethers';
+import { Erc721 } from '../services/erc721'; 
 
 @Component({
   selector: 'app-contract-erc721',
@@ -11,7 +11,7 @@ import { Erc721 } from './erc721';
 export class ContractErc721Component {
   owner?: string;
   tokens?: BigNumberish;
-  tokensId?: BigNumberish[];
+  tokensId?: BigNumberish[] = [];
   sendForm = new FormGroup({
     sender: new FormControl(''),
     recipient: new FormControl(''),
@@ -24,39 +24,39 @@ export class ContractErc721Component {
     this.owner = await this.ERC721.owner();
   }
   async getBalance() {
-    const balanceOf = await this.ERC721.balanceOf('0x228CD317eDD31b7417Ed3DC1334f43b35199Be4e');
+    const balanceOf = await this.ERC721.balanceOf('0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266');
     this.tokens = balanceOf.toString();
   }
   async mintToken() {
-    const mintToken = await this.ERC721.frontMint('0x228CD317eDD31b7417Ed3DC1334f43b35199Be4e');
-    console.log(mintToken);    
+    const mintToken = await this.ERC721.safeMint('0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266');
+    await mintToken.wait();
+    alert('your token had been minted') 
   }
   async sendToken() {
     const values = this.sendForm.value;
-    const sendToken = await this.ERC721.transfer(values.sender, values.recipient, values.tokenId);
-    console.log(sendToken);
+    const sendToken = await this.ERC721.transferFrom(values.sender, values.recipient, values.tokenId);
+    await sendToken.wait();
+    alert("token had been send !")
   }
 
-  async getAllBalance() {
-    const address = '0x228CD317eDD31b7417Ed3DC1334f43b35199Be4e';
-    //query tokens mint
-    const eventFilterTo = this.ERC721.filters['Transfer'](null, address);
-    const queryFilterTo = await this.ERC721.queryFilter(eventFilterTo);
-    const tokensTo = queryFilterTo.map((token) => {
-      const tokenId = Object.values(token.args!);
-      return tokenId[5].toString()    
+  async getTokens() {
+    const address = '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266';
+
+    const filterReceived = this.ERC721.filters.Transfer(null, address);
+    const filterSend = this.ERC721.filters.Transfer(address);
+
+    const [received, send] = await Promise.all([
+      this.ERC721.queryFilter(filterReceived),
+      this.ERC721.queryFilter(filterSend),
+    ]);
+
+    const tokensReceived = received.map((token) => {
+      return this.tokensId!.push(token.args.tokenId.toString())    
     });
 
-    //query tokens send
-    const eventFilterFrom = this.ERC721.filters['Transfer'](address);
-    const queryFilterFrom = await this.ERC721.queryFilter(eventFilterFrom);
-     const tokensFrom = queryFilterFrom.map((token) => {
-      const tokenId = Object.values(token.args!);
-      return tokenId[5].toString()    
+     const tokensSent = send.map((tokens) => {
+      const sendTokenIndex = this.tokensId!.findIndex((token) => token == tokens.args.tokenId.toString());
+      return this.tokensId!.splice(sendTokenIndex, 1)
     });
-
-    // remove send tokens to total of possessed tokens
-    this.tokensId = tokensTo.filter((token) => token != tokensFrom);
   }
-
 }

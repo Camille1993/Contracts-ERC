@@ -6,7 +6,7 @@
     <h4>{{owner}}</h4>
   </div>
 
-  <form [formGroup]="balanceOfForm">
+  <!-- <form [formGroup]="balanceOfForm">
     <h3>Balance of</h3>
     <mat-form-field>
       <mat-label>token Id</mat-label>
@@ -14,11 +14,25 @@
     </mat-form-field>
     <button type="submit" mat-stroked-button [disabled]="!balanceOfForm.valid" (click)="getBalance()">Nb tokens</button>
   </form>  
-  <h4>You currently have {{tokens}} tokens for token {{id}}</h4>
+  <h4>You currently have {{token}} tokens for token {{id}}</h4> -->
 </section>
 
 <section>
-  <button type="button" mat-stroked-button (click)="getTokensIds()">get all your tokens Id</button>
+  <button type="button" mat-stroked-button (click)="getTokens()">get your tokens</button>
+  <table>
+    <thead>
+      <tr>
+        <td>Token Id</td>
+        <td>Token Amount</td>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let token of tokens">
+            <td>{{token[0]}}</td>
+            <td>{{token[1]}}</td>
+        </tr>
+    </tbody>
+</table>
 </section>
 
 <section class="mint">  
@@ -69,6 +83,7 @@
     </ng-container>
   </div>
     <button mat-stroked-button type="button" (click)="addMintToken()">Add token</button>
+    <button mat-stroked-button type="button" (click)="checkId()">check Id</button>
     <button mat-stroked-button type="submit" [disabled]="!mintBatchForm.valid || mintBatchForm.pristine">Mint All</button>
   </form>
 </section>
@@ -138,7 +153,7 @@
       </ng-container>
     </div>
     <button mat-stroked-button type="button" (click)="addTokensToSend()">Add token</button>
-    <button mat-stroked-button type="submit" [disabled]="!sendBatchForm.valid || sendBatchForm.pristine" (click)="sendToken()">send token</button>
+    <button mat-stroked-button type="submit" [disabled]="!sendBatchForm.valid || sendBatchForm.pristine" (click)="safeBatchTransferFrom()">send token</button>
   </form>
 
 </section>

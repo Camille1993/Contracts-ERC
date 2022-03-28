@@ -1,0 +1,13 @@
+<section class="metamask">
+  <div *ngIf="connected; else connexion" class="profil">
+    <eth-jazzicon [address]="account!"></eth-jazzicon>
+    <div class="infoProfil">
+      <h4>{{account}}</h4>
+      <h5 *ngIf="chain$ | async as chain">Connected to {{ chain.name }}</h5>
+    </div>
+  </div>
+  <ng-template #connexion>
+    <button type="button" mat-stroked-button (click)="connect()">Connect account</button>
+  </ng-template>  
+</section>
+
